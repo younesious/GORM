@@ -50,7 +50,7 @@ func UserWithRangeAppointment(startDate, endDate time.Time, subject string, cale
 		return db.Preload("Calendar.Appointments.Attendees").
 			Joins("JOIN calendars ON users.id = calendars.user_id").
 			Joins("JOIN appointments ON calendars.id = appointments.owner_id AND appointments.owner_type = 'calendars'").
-			//	Joins("JOIN appointment_user ON appointments.id = appointment_user.appointment_id").
+			Joins("JOIN appointment_user ON appointments.id = appointment_user.appointment_id").
 			Where("appointments.start_time BETWEEN ? AND ?", startDate, endDate).
 			Where("appointments.subject = ?", subject).
 			Where("calendars.name LIKE ?", fmt.Sprintf("%%%s%%", calendarTableName)).
